@@ -1,4 +1,4 @@
-# DAWebAI: AI-Supported Medical Appointment Platform
+# AI Medical Appointment Platform
 
 A web platform where patients book and manage doctor appointments, and where machine learning models support diagnostic screening. Built with Next.js and MySQL, with Python (FastAPI) model services.
 
@@ -50,10 +50,6 @@ Next.js (pages router) · React · Tailwind CSS · shadcn/ui (Radix) · MySQL (`
    npm run dev
    ```
    Then open http://localhost:3000.
-
-## Project history
-
-This repository is the latest version. `DAppointmentApp`, `DAA`, `daa2` and `FDA` are earlier iterations of the same project.
 
 ## Disclaimer
 
