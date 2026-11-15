@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DAWebAI: AI-Supported Medical Appointment Platform
 
-## Getting Started
+A web platform where patients book and manage doctor appointments, and where machine learning models support diagnostic screening. Built with Next.js and MySQL, with Python (FastAPI) model services.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**For patients**
+- Sign up and log in
+- Browse the list of doctors and book appointments
+- View, reschedule and cancel appointments
+- **Symptom checker:** select symptoms; a Random Forest model predicts a likely condition and suggests which specialist to see
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**For doctors**
+- Separate doctor login
+- Dashboard with profile information, incoming appointments and schedule
+- Approve or cancel appointment requests
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+**ML services (`pages/*.py`)**
+| Service | Model | Purpose |
+|---|---|---|
+| `model.py` | Random Forest with PCA and standard scaling (scikit-learn) | Disease prediction from symptoms |
+| `hd.py` | Random Forest pipeline with imputation and one-hot encoding | Heart disease risk prediction |
+| `brain_tumor_api.py` | TensorFlow SavedModel | Brain tumor classification from an uploaded MRI image |
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Tech stack
 
-## Learn More
+Next.js (pages router) · React · Tailwind CSS · shadcn/ui (Radix) · MySQL (`mysql2`) · FastAPI · scikit-learn · TensorFlow
 
-To learn more about Next.js, take a look at the following resources:
+## Running locally
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Create `.env.local` with your MySQL connection:
+   ```
+   DB_HOST=...
+   DB_PORT=...
+   DB_USER=...
+   DB_PASSWORD=...
+   DB_NAME=...
+   ```
+3. Start the symptom model service (the frontend calls `http://localhost:8000/model`):
+   ```bash
+   pip install fastapi uvicorn pandas numpy scikit-learn joblib
+   cd pages && uvicorn model:app --port 8000
+   ```
+4. Start the web app:
+   ```bash
+   npm run dev
+   ```
+   Then open http://localhost:3000.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Project history
 
-## Deploy on Vercel
+This repository is the latest version. `DAppointmentApp`, `DAA`, `daa2` and `FDA` are earlier iterations of the same project.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Disclaimer
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This is a student project. The models are for demonstration only and are not a medical device or a substitute for professional diagnosis.
+
+## License
+
+[MIT](LICENSE)
